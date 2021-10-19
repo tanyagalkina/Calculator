@@ -1,21 +1,32 @@
 module OurMagicParser
-
     (
-        ourFunParser
-        , someFunc
+       
+        braveExit
+        , printResult
+        , stripChars
     ) where
 
-someFunc :: IO ()
-someFunc = putStrLn "84.00"
+import Text.Printf
+import System.Exit
 
---type EitherParser a = String -> Either String (a, String) 
-
-
-ourFunParser :: String -> Maybe Float
-ourFunParser _ | 2 == 2 = Just 3.14  -- 2 == 2if our real Parser succeeds
-               | otherwise = Nothing  
+stripChars :: String -> String -> String
+stripChars = filter . flip notElem
 
 
-ourFunParserEither :: String -> Either String Float
-ourFunParserEither input | 2 == 2 = Left "I apologize... smth went wrong"
-                   | otherwise = Right 3.14
+printResult :: [(Float, String)] -> IO()
+printResult [] = braveExit "I could not calculate... I am sorry" 84
+printResult  res | snd (head res) /= "" =  braveExit "I could not parse everything.." 84
+                 | otherwise = 
+                   thePrint $ fst (head res) 
+
+
+braveExit :: String -> Int -> IO ()
+braveExit str 0 = putStrLn str >> exitWith (ExitSuccess)
+braveExit str n = putStrLn str >> exitWith (ExitFailure n)
+
+
+thePrint :: (Show a, PrintfArg a, RealFloat a) => a -> IO ()
+thePrint x = 
+    if (not (isInfinite x)) then
+        printf "%.2f\n" x
+    else braveExit "I think you have tried to divide by zero .." 84
