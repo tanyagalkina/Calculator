@@ -80,16 +80,41 @@ validFloat xs | len == 1 || len == 0 = True
                | otherwise = False
                   where len =  (length $ filter (== '.') xs)
 
+
+
+posflt :: NParser Float
+posflt = do char '+'
+            n <- pflt
+            return (n)
+            <|> pflt
+
+
 pflt :: NParser Float
 pflt =  some digitF' >>= \xs ->
               if validFloat xs
                   then return (read xs)
               else empty
+
+
+--pflt' :: NParser Float
+--pflt' = do
+--      char '+'
+--      xs <-              
            
+{--flt :: NParser Float
+flt = do sign <- (char '-' <|> char '+')
+         n <- pflt
+         if sign == '-' then
+           return (-n)
+         else return n
+           <|> pflt--}
 
-
+-------------------------------
 flt :: NParser Float
 flt = do char '-'
          n <- pflt
          return (-n)
-         <|> pflt
+---- pflt
+         <|> posflt
+
+------------------------------

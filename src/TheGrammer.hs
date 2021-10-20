@@ -42,6 +42,7 @@ factor = do
 
 
 pow = do
+      --sign <- getFrontSign
       char '('
       x <- expression
       char ')'
