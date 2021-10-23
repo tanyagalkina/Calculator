@@ -30,13 +30,16 @@ test7 = TestCase (assertEqual "oper *," (-6.0) (TheGrammer.oper '*' (-2) 3))
 
 test8 = TestCase (assertEqual "oper /," (3.0) (TheGrammer.oper '/' 9 3))
 
+test9 = TestCase (assertEqual "parse," ([(12.0,"")]) 
+                (Bootstrap.parse TheGrammer.expression "9+3"))
+
 errorTest :: Test
 errorTest = TestList [TestLabel "test1" test1, TestLabel "test2" test2]
 
 operTest :: Test
 operTest = TestList [TestLabel "test3" test3, TestLabel "test4" test4, 
         TestLabel "test5" test5,TestLabel "test6" test6, TestLabel "test7" test7, 
-        TestLabel "test8" test8]
+        TestLabel "test8" test8, TestLabel "test9" test9]
 
 runTests :: IO Counts
 runTests = do 
