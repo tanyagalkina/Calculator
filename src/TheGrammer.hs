@@ -6,10 +6,9 @@ module TheGrammer
  )
 where
 import Bootstrap
-import OurMagicParser
 
 oper:: Char -> Float -> Float -> Float
-oper ' ' x y = 2 / 0
+oper ' ' x y = x + y 
 oper '-' x y = x - y
 oper '+' x y = x + y
 oper '*' x y = x * y
