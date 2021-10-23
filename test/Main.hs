@@ -5,10 +5,8 @@
 -- Spec
 --
 
--- module TestU where
 module Main where
 
--- import Main
 import Test.HUnit
 import OurMagicParser
 import TheGrammer
@@ -18,13 +16,32 @@ test1 = TestCase (assertEqual "isFloatDigit 2," (True) (Bootstrap.isFloatDigit '
 
 test2 = TestCase (assertEqual "isFloatDigit c," (False) (Bootstrap.isFloatDigit 'c'))
 
-firstTest :: Test
-firstTest = TestList [TestLabel "test1" test1, TestLabel "test2" test2]
+-- rajouter le test pour les espaces
+
+test3 = TestCase (assertEqual "oper -," (-1.0) (TheGrammer.oper '-' 2 3))
+
+test4 = TestCase (assertEqual "oper -," (3.0) (TheGrammer.oper '-' 6 3))
+
+test5 = TestCase (assertEqual "oper +," (16.2) (TheGrammer.oper '+' 12 4.2))
+
+test6 = TestCase (assertEqual "oper +," (1.0) (TheGrammer.oper '+' (-2) 3))
+
+test7 = TestCase (assertEqual "oper *," (-6.0) (TheGrammer.oper '*' (-2) 3))
+
+test8 = TestCase (assertEqual "oper /," (3.0) (TheGrammer.oper '/' 9 3))
+
+errorTest :: Test
+errorTest = TestList [TestLabel "test1" test1, TestLabel "test2" test2]
+
+operTest :: Test
+operTest = TestList [TestLabel "test3" test3, TestLabel "test4" test4, 
+        TestLabel "test5" test5,TestLabel "test6" test6, TestLabel "test7" test7, 
+        TestLabel "test8" test8]
 
 runTests :: IO Counts
 runTests = do 
-        _ <-runTestTT firstTest
-        runTestTT firstTest
+        _ <-runTestTT errorTest
+        runTestTT operTest
 
 main :: IO Counts
 main = runTests

@@ -29,4 +29,4 @@ thePrint :: (Show a, PrintfArg a, RealFloat a) => a -> IO ()
 thePrint x = 
     if (not (isInfinite x)) then
         printf "%.2f\n" x
-    else braveExit "I think you have tried to divide by zero .." 84
+    else braveExit "wrong operation can you try again" 84
