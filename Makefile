@@ -13,9 +13,6 @@ $(NAME)		:
 				stack build
 				mv $(shell stack path --local-install-root)/bin/$(NAME)-exe ./$(NAME)
 
-tests_run	:
-				stack test
-
 clean		:
 				$(RM) $(NAME)
 
