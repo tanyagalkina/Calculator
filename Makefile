@@ -1,17 +1,30 @@
-WHERE   :=  $(shell stack path --local-install-root)
-NAME            =   funEvalExpr
+##
+## EPITECH PROJECT, 2021
+## EvalExpr
+## File description:
+## Makefile
+##
 
-all:
-	stack build
-	cp $(WHERE)/bin/$(NAME)-exe ./$(NAME)
+NAME		=	funEvalExpr
 
-clean:
-	stack purge
+all			:	$(NAME)
 
-fclean: clean
-	rm -f $(NAME)
+$(NAME)		:
+				stack build
+				mv $(shell stack path --local-install-root)/bin/$(NAME)-exe ./$(NAME)
 
-re: fclean all
+tests_run	:
+				stack test
 
-.PHONY: all clean fclean re
+clean		:
+				$(RM) $(NAME)
 
+fclean		:	clean
+				stack clean
+
+re			:	fclean all
+
+tests_run	:
+				stack build --test
+
+.PHONY		:	all clean fclean re tests_run
