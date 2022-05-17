@@ -6,12 +6,8 @@ module Bootstrap
 
 import Data.Char
 import Control.Applicative
-import Debug.Trace
 
---newtype NParser a = P (String -> Maybe (a, String))
-
-
---return emtpy list if fails
+--returns emtpy list if fails
 newtype NParser a = P (String ->[(a, String)])
 
 
@@ -96,25 +92,8 @@ pflt =  some digitF' >>= \xs ->
               else empty
 
 
---pflt' :: NParser Float
---pflt' = do
---      char '+'
---      xs <-              
-           
-{--flt :: NParser Float
-flt = do sign <- (char '-' <|> char '+')
-         n <- pflt
-         if sign == '-' then
-           return (-n)
-         else return n
-           <|> pflt--}
-
--------------------------------
 flt :: NParser Float
 flt = do char '-'
          n <- pflt
          return (-n)
----- pflt
          <|> posflt
-
-------------------------------
